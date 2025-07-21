@@ -1,0 +1,27 @@
+{
+  "name": "protest-tracker-dev",
+  "version": "1.0.0",
+  "description": "Development environment for Protest Tracker",
+  "scripts": {
+    "start": "./start-dev.sh",
+    "stop": "./stop-dev.sh",
+    "dev": "./start-dev.sh",
+    "clean": "./stop-dev.sh && docker system prune -f",
+    "backend": "cd backend && make run",
+    "frontend": "cd frontend && npm start",
+    "db-up": "docker-compose -f backend/docker-compose.yml up -d postgres",
+    "db-down": "docker-compose -f backend/docker-compose.yml down"
+  },
+  "keywords": [
+    "protest",
+    "tracker",
+    "go",
+    "react",
+    "postgresql"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
