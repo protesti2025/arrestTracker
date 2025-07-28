@@ -36,12 +36,6 @@ components:
         longitude:
           type: number
           format: float
-        policeCount:
-          type: integer
-        arestedCount:
-          type: integer
-        carPlates:
-          type: string
         notes:
           type: string
         createdBy:

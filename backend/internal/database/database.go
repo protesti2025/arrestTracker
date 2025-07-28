@@ -33,6 +33,7 @@ func createTables(db *sql.DB) error {
 		`CREATE TABLE IF NOT EXISTS users (
 			id SERIAL PRIMARY KEY,
 			email VARCHAR(255) UNIQUE NOT NULL,
+			phone_number VARCHAR(255),
 			password VARCHAR(255) NOT NULL,
 			role VARCHAR(50) NOT NULL DEFAULT 'spotter'
 		);`,
@@ -41,9 +42,6 @@ func createTables(db *sql.DB) error {
 			time TIMESTAMP NOT NULL,
 			latitude FLOAT NOT NULL,
 			longitude FLOAT NOT NULL,
-			police_count INTEGER NOT NULL,
-			arrested_count INTEGER NOT NULL,
-			car_plates TEXT,
 			notes TEXT,
 			created_by INTEGER REFERENCES users(id),
 			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

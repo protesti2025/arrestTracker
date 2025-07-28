@@ -107,9 +107,19 @@ const EventDetails = () => {
       <div className="main-content">
         <div className="event-details-header">
           <h1 className="page-title">Event #{event.id}</h1>
-          <button onClick={() => navigate('/dashboard')} className="btn btn-secondary">
-            Back to Dashboard
-          </button>
+          <div className="header-actions">
+            {isSpotter && (
+              <button 
+                onClick={() => navigate(`/edit-event/${event.id}`)} 
+                className="btn"
+              >
+                Add Note
+              </button>
+            )}
+            <button onClick={() => navigate('/dashboard')} className="btn btn-secondary">
+              Back to Dashboard
+            </button>
+          </div>
         </div>
 
         <div className="event-details-content">
@@ -119,7 +129,7 @@ const EventDetails = () => {
               <div className="event-details-grid">
                 <div className="detail-item">
                   <span className="label">Timestamp:</span>
-                  <span className="value">{new Date(event.timestamp).toLocaleString()}</span>
+                  <span className="value">{new Date(event.time).toLocaleString()}</span>
                 </div>
                 <div className="detail-item">
                   <span className="label">Location:</span>
@@ -130,26 +140,6 @@ const EventDetails = () => {
                     }
                   </span>
                 </div>
-                <div className="detail-item">
-                  <span className="label">Police Count:</span>
-                  <span className="value">{event.police_count || 'Unknown'}</span>
-                </div>
-                <div className="detail-item">
-                  <span className="label">Arrested Count:</span>
-                  <span className="value">{event.arrested_count || 'Unknown'}</span>
-                </div>
-                {event.car_plates && (
-                  <div className="detail-item">
-                    <span className="label">Car Plates:</span>
-                    <span className="value">{event.car_plates}</span>
-                  </div>
-                )}
-                {event.notes && (
-                  <div className="detail-item full-width">
-                    <span className="label">Notes:</span>
-                    <span className="value">{event.notes}</span>
-                  </div>
-                )}
               </div>
 
               {isSpotter && (
@@ -164,6 +154,26 @@ const EventDetails = () => {
               )}
             </div>
           </div>
+
+          {/* Enhanced Notes Section */}
+          {event.notes && (
+            <div className="event-notes-section">
+              <div className="card">
+                <h2>Notes & Updates</h2>
+                <div className="notes-content" style={{
+                  background: '#f8f9fa',
+                  padding: '15px',
+                  borderRadius: '6px',
+                  border: '1px solid #dee2e6',
+                  whiteSpace: 'pre-wrap',
+                  lineHeight: '1.6',
+                  fontSize: '14px'
+                }}>
+                  {event.notes}
+                </div>
+              </div>
+            </div>
+          )}
 
           {event.latitude && event.longitude && (
             <div className="event-map-section">

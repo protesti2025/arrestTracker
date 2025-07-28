@@ -20,6 +20,9 @@ func NewAuthHandler(authService *services.AuthService) *AuthHandler {
 
 // Login handles user authentication
 func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	var req models.LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		RespondError(w, "Invalid request body", http.StatusBadRequest)
@@ -42,10 +45,15 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 
 // Register handles user registration
 func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	var req struct {
-		Email    string `json:"email"`
-		Password string `json:"password"`
-		Role     string `json:"role"`
+		Email       string `json:"email"`
+		Password    string `json:"password"`
+		PhoneNumber string `json:"phone_number"`
+		Role        string `json:"role"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -67,7 +75,7 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := h.authService.Register(req.Email, req.Password, req.Role)
+	user, err := h.authService.Register(req.Email, req.Password, req.PhoneNumber, req.Role)
 	if err != nil {
 		RespondError(w, err.Error(), http.StatusBadRequest)
 		return

@@ -83,7 +83,7 @@ src/
 ### Step 6: Event Submission (Spotters)
 
 - Create Event Submission form with fields:
-  - Time, Latitude, Longitude, Police Count, Arrested Count, Car Plates, Notes.
+  - Time, Latitude, Longitude, Notes.
 - Submit to:
   ```http
   POST /events

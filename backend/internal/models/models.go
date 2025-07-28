@@ -8,23 +8,21 @@ import (
 
 // User represents a user in the system
 type User struct {
-	ID       int    `json:"id"`
-	Email    string `json:"email"`
-	Password string `json:"-"`
-	Role     string `json:"role"`
+	ID          int    `json:"id"`
+	Email       string `json:"email"`
+	PhoneNumber string `json:"phone_number"`
+	Password    string `json:"-"`
+	Role        string `json:"role"`
 }
 
 // ArrestEvent represents a protest arrest event
 type ArrestEvent struct {
-	ID            int       `json:"id"`
-	Time          time.Time `json:"time"`
-	Latitude      float64   `json:"latitude"`
-	Longitude     float64   `json:"longitude"`
-	PoliceCount   int       `json:"policeCount"`
-	ArrestedCount int       `json:"arrestedCount"`
-	CarPlates     string    `json:"carPlates"`
-	Notes         string    `json:"notes"`
-	CreatedBy     int       `json:"createdBy"`
+	ID        int       `json:"id"`
+	Time      time.Time `json:"time"`
+	Latitude  float64   `json:"latitude"`
+	Longitude float64   `json:"longitude"`
+	Notes     string    `json:"notes"`
+	CreatedBy int       `json:"createdBy"`
 }
 
 // Media represents uploaded media files

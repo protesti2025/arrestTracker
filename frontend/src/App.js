@@ -34,6 +34,14 @@ function App() {
               } 
             />
             <Route 
+              path="/edit-event/:id" 
+              element={
+                <ProtectedRoute>
+                <EventSubmission />
+                </ProtectedRoute>
+              }
+            /> 
+            <Route 
               path="/submit-event" 
               element={
                 <ProtectedRoute requiredRole="spotter">

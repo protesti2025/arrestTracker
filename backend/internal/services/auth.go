@@ -44,7 +44,7 @@ func (s *AuthService) Login(email, password string) (string, error) {
 }
 
 // Register creates a new user account
-func (s *AuthService) Register(email, password, role string) (*models.User, error) {
+func (s *AuthService) Register(email, password, phone_number, role string) (*models.User, error) {
 	// Check if user already exists
 	existingUser, err := s.userRepo.GetByEmail(email)
 	if err != nil && err != sql.ErrNoRows {

@@ -209,7 +209,7 @@ print_status "Building Go backend..."
 go build -o protest-tracker .
 
 print_status "Starting Go backend server on port $BACKEND_PORT..."
-./protest-tracker &
+./protest-tracker > logs 2>&1 &
 BACKEND_PID=$!
 
 cd ..

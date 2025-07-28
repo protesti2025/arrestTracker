@@ -50,9 +50,6 @@ ID: Integer
 Time: Timestamp
 Latitude: Float
 Longitude: Float
-PoliceCount: Integer
-ArestedCount: Integer
-CarPlates: String
 Notes: String
 CreatedBy: Integer (User ID)
 ```
@@ -105,9 +102,6 @@ UserID: Integer
   "time": "2024-07-06T19:00:00Z",
   "latitude": 44.7866,
   "longitude": 20.4489,
-  "policeCount": 5,
-  "arestedCount": 2,
-  "carPlates": "BG123-XY",
   "notes": "Arrest during peaceful protest."
 }
 ```

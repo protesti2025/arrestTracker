@@ -22,6 +22,9 @@ func NewEventHandler(eventService *services.EventService) *EventHandler {
 
 // GetEvents retrieves all events
 func (h *EventHandler) GetEvents(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	events, err := h.eventService.GetAllEvents()
 	if err != nil {
 		RespondError(w, "Database error", http.StatusInternalServerError)
@@ -33,6 +36,9 @@ func (h *EventHandler) GetEvents(w http.ResponseWriter, r *http.Request) {
 
 // GetEvent retrieves a specific event by ID
 func (h *EventHandler) GetEvent(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	vars := mux.Vars(r)
 	eventID, err := strconv.Atoi(vars["id"])
 	if err != nil {
@@ -51,6 +57,9 @@ func (h *EventHandler) GetEvent(w http.ResponseWriter, r *http.Request) {
 
 // CreateEvent creates a new event
 func (h *EventHandler) CreateEvent(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	var event models.ArrestEvent
 	if err := json.NewDecoder(r.Body).Decode(&event); err != nil {
 		RespondError(w, "Invalid request body", http.StatusBadRequest)
@@ -71,6 +80,9 @@ func (h *EventHandler) CreateEvent(w http.ResponseWriter, r *http.Request) {
 
 // UpdateEvent updates an existing event
 func (h *EventHandler) UpdateEvent(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	vars := mux.Vars(r)
 	eventID, err := strconv.Atoi(vars["id"])
 	if err != nil {
@@ -96,6 +108,9 @@ func (h *EventHandler) UpdateEvent(w http.ResponseWriter, r *http.Request) {
 
 // DeleteEvent deletes an event
 func (h *EventHandler) DeleteEvent(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	vars := mux.Vars(r)
 	eventID, err := strconv.Atoi(vars["id"])
 	if err != nil {
@@ -114,6 +129,9 @@ func (h *EventHandler) DeleteEvent(w http.ResponseWriter, r *http.Request) {
 
 // SubscribeEvent subscribes a user to an event
 func (h *EventHandler) SubscribeEvent(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	vars := mux.Vars(r)
 	eventID, err := strconv.Atoi(vars["id"])
 	if err != nil {
@@ -134,6 +152,9 @@ func (h *EventHandler) SubscribeEvent(w http.ResponseWriter, r *http.Request) {
 
 // UnsubscribeEvent unsubscribes a user from an event
 func (h *EventHandler) UnsubscribeEvent(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	vars := mux.Vars(r)
 	eventID, err := strconv.Atoi(vars["id"])
 	if err != nil {

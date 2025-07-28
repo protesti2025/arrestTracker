@@ -64,8 +64,8 @@ func (s *Server) setupRoutes(
 	s.router.Use(middleware.CORSMiddleware)
 
 	// Public routes
-	s.router.HandleFunc("/api/login", authHandler.Login).Methods("POST")
-	s.router.HandleFunc("/api/register", authHandler.Register).Methods("POST")
+	s.router.HandleFunc("/api/login", authHandler.Login).Methods("POST", "OPTIONS")
+	s.router.HandleFunc("/api/register", authHandler.Register).Methods("POST", "OPTIONS")
 
 	// Health check
 	s.router.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
@@ -77,29 +77,27 @@ func (s *Server) setupRoutes(
 	api.Use(middleware.AuthMiddleware(jwtSecret))
 
 	// Event routes (accessible to both spotters and advocates)
-	api.HandleFunc("/events", eventHandler.GetEvents).Methods("GET")
-	api.HandleFunc("/events/{id}", eventHandler.GetEvent).Methods("GET")
-	api.HandleFunc("/events", eventHandler.CreateEvent).Methods("POST")
-	api.HandleFunc("/events/{id}", eventHandler.UpdateEvent).Methods("PUT")
-	api.HandleFunc("/events/{id}", eventHandler.DeleteEvent).Methods("DELETE")
-	api.HandleFunc("/events/{id}/subscribe", eventHandler.SubscribeEvent).Methods("POST")
-	api.HandleFunc("/events/{id}/subscribe", eventHandler.UnsubscribeEvent).Methods("DELETE")
+	api.HandleFunc("/events", eventHandler.GetEvents).Methods("GET", "OPTIONS")
+	api.HandleFunc("/events/{id}", eventHandler.GetEvent).Methods("GET", "OPTIONS")
+	api.HandleFunc("/events", eventHandler.CreateEvent).Methods("POST", "OPTIONS")
+	api.HandleFunc("/events/{id}", eventHandler.UpdateEvent).Methods("PUT", "OPTIONS")
+	api.HandleFunc("/events/{id}/subscribe", eventHandler.SubscribeEvent).Methods("POST", "OPTIONS")
+	api.HandleFunc("/events/{id}/subscribe", eventHandler.UnsubscribeEvent).Methods("DELETE", "OPTIONS")
 
 	// Media upload (accessible to spotters)
-	api.HandleFunc("/events/{id}/media", mediaHandler.UploadMedia).Methods("POST")
+	api.HandleFunc("/events/{id}/media", mediaHandler.UploadMedia).Methods("POST", "OPTIONS")
 
 	// Advocate-only routes
 	advocateRoutes := api.PathPrefix("").Subrouter()
 	advocateRoutes.Use(middleware.AdvocateOnlyMiddleware)
 
 	// Media viewing (advocates only)
-	advocateRoutes.HandleFunc("/events/{id}/media", mediaHandler.GetEventMedia).Methods("GET")
-	advocateRoutes.HandleFunc("/events/{id}/media/{mediaId}", mediaHandler.GetMedia).Methods("GET")
-	advocateRoutes.HandleFunc("/events/{id}/media/{mediaId}", mediaHandler.DeleteMedia).Methods("DELETE")
+	advocateRoutes.HandleFunc("/events/{id}/media", mediaHandler.GetEventMedia).Methods("GET", "OPTIONS")
+	advocateRoutes.HandleFunc("/events/{id}/media/{mediaId}", mediaHandler.GetMedia).Methods("GET", "OPTIONS")
 
 	// Witness contact (advocates only)
-	advocateRoutes.HandleFunc("/events/{id}/contact-witnesses", witnessHandler.ContactWitnesses).Methods("POST")
-	advocateRoutes.HandleFunc("/events/{id}/witness-count", witnessHandler.GetWitnessCount).Methods("GET")
+	advocateRoutes.HandleFunc("/events/{id}/contact-witnesses", witnessHandler.ContactWitnesses).Methods("POST", "OPTIONS")
+	advocateRoutes.HandleFunc("/events/{id}/witness-count", witnessHandler.GetWitnessCount).Methods("GET", "OPTIONS")
 }
 
 func (s *Server) Start() error {
